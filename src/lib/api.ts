@@ -137,7 +137,7 @@ export const api = {
     await delay(300);
     return mockTours.find(t => t.id === id);
   },
-  
+
   // Bookings
   createBooking: async (bookingData: Omit<Booking, 'id' | 'status'>): Promise<Booking> => {
     await delay(800);
@@ -164,7 +164,7 @@ export const api = {
     await delay(500);
     return mockBookings;
   },
-  
+
   // Auth
   login: async (email: string): Promise<User> => {
     await delay(500);
