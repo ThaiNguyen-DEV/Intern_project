@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/Button";
 import { TourCard } from "@/components/ui/TourCard";
 import { RecentlyViewedTours } from "@/components/ui/RecentlyViewedTours";
 import { api } from "@/lib/api";
-import { Search } from "lucide-react";
+import { HeroSearch } from "@/components/ui/HeroSearch";
 
 export default async function Home() {
   const tours = await api.getTours();
@@ -13,37 +13,23 @@ export default async function Home() {
     <div>
       {/* Hero Section */}
       <section className="relative h-[80vh] min-h-[600px] w-full">
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800')" }}
+          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')" }}
         >
           <div className="absolute inset-0 bg-black/40" />
         </div>
-        
+
         <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-center text-white">
           <h1 className="mb-6 text-5xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl">
             Discover Your Next <span className="text-blue-400">Adventure</span>
           </h1>
           <p className="mb-10 max-w-2xl text-lg sm:text-xl text-gray-200">
-            Explore the world's most beautiful destinations with our curated tours. 
+            Explore the world's most beautiful destinations with our curated tours.
             Book your dream vacation today and create memories that last a lifetime.
           </p>
-          
-          <div className="flex w-full max-w-3xl flex-col gap-4 sm:flex-row p-2 bg-white/10 backdrop-blur-md rounded-2xl">
-            <div className="flex-1 bg-white rounded-xl overflow-hidden flex items-center px-4">
-              <Search className="h-5 w-5 text-gray-400" />
-              <input 
-                type="text" 
-                placeholder="Where do you want to go?" 
-                className="w-full bg-transparent px-4 py-3 text-gray-900 focus:outline-none placeholder-gray-500"
-              />
-            </div>
-            <Link href="/tours">
-              <Button size="lg" className="w-full sm:w-auto py-3 px-8 text-lg rounded-xl">
-                Search Tours
-              </Button>
-            </Link>
-          </div>
+
+          <HeroSearch />
         </div>
       </section>
 
@@ -56,13 +42,13 @@ export default async function Home() {
               Hand-picked tours to some of the most stunning locations around the globe.
             </p>
           </div>
-          
+
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {featuredTours.map((tour) => (
               <TourCard key={tour.id} tour={tour} />
             ))}
           </div>
-          
+
           <div className="mt-12 text-center">
             <Link href="/tours">
               <Button variant="outline" size="lg">
@@ -72,10 +58,10 @@ export default async function Home() {
           </div>
         </div>
       </section>
-      
+
       {/* Recently Viewed */}
       <RecentlyViewedTours />
-      
+
       {/* Why Choose Us */}
       <section className="py-20 bg-white dark:bg-gray-950">
         <div className="container mx-auto px-4">

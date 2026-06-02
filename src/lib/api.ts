@@ -9,7 +9,13 @@ const mockTours: Tour[] = [
     price: 899,
     location: "Bali, Indonesia",
     duration: "7 Days",
-    images: ["https://images.unsplash.com/photo-1537996194471-e657df975ab4"],
+    images: [
+      "https://images.unsplash.com/photo-1537996194471-e657df975ab4",
+      "https://images.unsplash.com/photo-1555400038-63f5ba517a47",
+      "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2",
+      "https://images.unsplash.com/photo-1573790387438-4da90503f5ce",
+      "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1"
+    ],
     rating: 4.8,
     reviewsCount: 124,
     description: "Experience the ultimate tropical getaway with our 7-day Bali tour. Visit ancient temples, relax on pristine beaches, and immerse yourself in the rich local culture.",
@@ -24,7 +30,8 @@ const mockTours: Tour[] = [
     ],
     isDeal: true,
     discountPrice: 799,
-    destinationSlug: "bali"
+    destinationSlug: "bali",
+    availableDates: ["2026-07-10", "2026-07-25", "2026-08-05", "2026-08-20"]
   },
   {
     id: "2",
@@ -32,7 +39,13 @@ const mockTours: Tour[] = [
     price: 1499,
     location: "Zurich, Switzerland",
     duration: "5 Days",
-    images: ["https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99"],
+    images: [
+      "https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99",
+      "https://images.unsplash.com/photo-1528901166007-3784c7dd3653",
+      "https://images.unsplash.com/photo-1469796466635-455efeec0962",
+      "https://images.unsplash.com/photo-1520108398188-fb2ce87e7f6e",
+      "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af"
+    ],
     rating: 4.9,
     reviewsCount: 89,
     description: "Discover the breathtaking beauty of the Swiss Alps. Enjoy scenic train rides, guided mountain hikes, and indulge in world-famous Swiss chocolate and cheese.",
@@ -43,7 +56,8 @@ const mockTours: Tour[] = [
       { day: 4, activity: "Lucerne Lake Cruise" },
       { day: 5, activity: "Departure from Zurich" },
     ],
-    destinationSlug: "switzerland"
+    destinationSlug: "switzerland",
+    availableDates: ["2026-06-15", "2026-07-01", "2026-07-15", "2026-08-01"]
   },
   {
     id: "3",
@@ -51,7 +65,13 @@ const mockTours: Tour[] = [
     price: 1200,
     location: "Tokyo, Japan",
     duration: "6 Days",
-    images: ["https://images.unsplash.com/photo-1503899036084-c55cdd92da26"],
+    images: [
+      "https://images.unsplash.com/photo-1503899036084-c55cdd92da26",
+      "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf",
+      "https://images.unsplash.com/photo-1554797589-7241f49ce83d",
+      "https://images.unsplash.com/photo-1536098561742-ca998e48cbcc",
+      "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e"
+    ],
     rating: 4.7,
     reviewsCount: 210,
     description: "Explore the bustling metropolis of Tokyo. From neon-lit streets to serene temples, this tour offers a perfect blend of modern and traditional Japan.",
@@ -65,7 +85,8 @@ const mockTours: Tour[] = [
     ],
     isDeal: true,
     discountPrice: 1050,
-    destinationSlug: "tokyo"
+    destinationSlug: "tokyo",
+    availableDates: ["2026-06-20", "2026-07-05", "2026-09-10", "2026-10-01"]
   },
 ];
 
@@ -130,6 +151,9 @@ export const api = {
     }
     if (params?.destinationSlug) {
       result = result.filter(t => t.destinationSlug === params.destinationSlug);
+    }
+    if (params?.date) {
+      result = result.filter(t => t.availableDates.includes(params.date));
     }
     return result;
   },

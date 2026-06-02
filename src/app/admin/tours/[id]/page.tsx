@@ -26,6 +26,8 @@ export default function AdminEditTourPage({ params }: { params: Promise<{ id: st
     isDeal: false,
     maxGuests: 10,
     rating: 5.0,
+    availableDates: "",
+    images: "",
   });
 
   const [itinerary, setItinerary] = useState([{ day: 1, activity: "" }]);
@@ -45,6 +47,8 @@ export default function AdminEditTourPage({ params }: { params: Promise<{ id: st
             isDeal: tour.isDeal || false,
             maxGuests: 10,
             rating: tour.rating,
+            availableDates: tour.availableDates?.join(", ") || "",
+            images: tour.images?.join(",\n") || "",
           });
           setItinerary(tour.itinerary.length ? tour.itinerary : [{ day: 1, activity: "" }]);
         }
@@ -200,11 +204,20 @@ export default function AdminEditTourPage({ params }: { params: Promise<{ id: st
             </div>
 
             <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 p-6 space-y-6">
-              <h2 className="text-xl font-bold dark:text-white border-b border-gray-100 dark:border-gray-800 pb-4">Media</h2>
+              <h2 className="text-xl font-bold dark:text-white border-b border-gray-100 dark:border-gray-800 pb-4">Availability & Media</h2>
               
-              <div className="border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-2xl p-8 text-center hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer flex flex-col items-center justify-center">
-                <ImageIcon className="w-10 h-10 text-gray-400 mb-2" />
-                <p className="text-sm font-medium dark:text-white mb-1">Click to change images</p>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Available Dates</label>
+                  <input name="availableDates" value={formData.availableDates} onChange={handleChange} type="text" className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white" placeholder="YYYY-MM-DD, YYYY-MM-DD" />
+                  <p className="text-xs text-gray-500 mt-1">Comma-separated dates</p>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Image URLs</label>
+                  <textarea name="images" value={formData.images} onChange={handleChange} rows={4} className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white font-mono text-sm" placeholder="https://example.com/img1.jpg, https://example.com/img2.jpg" />
+                  <p className="text-xs text-gray-500 mt-1">Comma-separated image URLs (approx 5 images recommended)</p>
+                </div>
               </div>
             </div>
 

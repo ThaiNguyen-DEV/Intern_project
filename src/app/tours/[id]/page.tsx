@@ -1,10 +1,11 @@
 import { api } from "@/lib/api";
 import { Button } from "@/components/ui/Button";
-import { MapPin, Star, Clock, Calendar, CheckCircle, MessageSquare } from "lucide-react";
+import { MapPin, Star, Clock, Calendar, CheckCircle, MessageSquare, Image as ImageIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { TourBookingSidebar } from "@/components/ui/TourBookingSidebar";
+import { TourGallery } from "@/components/ui/TourGallery";
 
 export default async function TourDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
@@ -48,6 +49,9 @@ export default async function TourDetailPage({ params }: { params: Promise<{ id:
             <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed text-lg">
               {tour.description}
             </p>
+
+            {/* Image Gallery */}
+            <TourGallery images={tour.images} />
             
             <h2 className="text-2xl font-bold mb-6 dark:text-white">Itinerary</h2>
             <div className="space-y-6 mb-12">

@@ -20,8 +20,8 @@ export function TourBookingSidebar({ tour }: { tour: Tour }) {
     addTour(tour.id);
   }, [tour.id, addTour]);
 
-  // Simple date constraint
-  const today = new Date().toISOString().split("T")[0];
+  // Check if dates are available
+  const hasDates = tour.availableDates && tour.availableDates.length > 0;
 
   const handleAddToCart = () => {
     if (!date) {
@@ -70,13 +70,18 @@ export function TourBookingSidebar({ tour }: { tour: Tour }) {
       <div className="space-y-4 mb-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date</label>
-          <input 
-            type="date" 
-            min={today}
+          <select
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-          />
+            disabled={!hasDates}
+            className="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white disabled:opacity-50"
+          >
+            <option value="">Select a date</option>
+            {hasDates && tour.availableDates.map(d => (
+              <option key={d} value={d}>{d}</option>
+            ))}
+            {!hasDates && <option value="" disabled>No dates available</option>}
+          </select>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Guests</label>
@@ -99,7 +104,7 @@ export function TourBookingSidebar({ tour }: { tour: Tour }) {
         </div>
         <div className="flex items-center gap-3 text-gray-600 dark:text-gray-300">
           <Calendar className="h-4 w-4 text-blue-500" />
-          <span>Available dates: Multiple dates</span>
+          <span>Available dates: {hasDates ? tour.availableDates.length : 0} dates</span>
         </div>
         <div className="flex items-center gap-3 text-gray-600 dark:text-gray-300">
           <CheckCircle className="h-4 w-4 text-blue-500" />
@@ -108,10 +113,10 @@ export function TourBookingSidebar({ tour }: { tour: Tour }) {
       </div>
       
       <div className="flex flex-col gap-3">
-        <Button onClick={handleBookNow} className="w-full py-4 text-lg">
+        <Button onClick={handleBookNow} disabled={!hasDates} className="w-full py-4 text-lg">
           Book Now
         </Button>
-        <Button onClick={handleAddToCart} variant="outline" className="w-full py-4 text-lg">
+        <Button onClick={handleAddToCart} disabled={!hasDates} variant="outline" className="w-full py-4 text-lg">
           <ShoppingCart className="w-5 h-5 mr-2" /> Add to Cart
         </Button>
       </div>

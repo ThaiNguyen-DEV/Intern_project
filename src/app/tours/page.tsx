@@ -14,6 +14,7 @@ function ToursContent() {
   
   const initialSearch = searchParams.get("search") || "";
   const initialLocation = searchParams.get("location") || "";
+  const initialDate = searchParams.get("date") || "";
   const initialMaxPrice = Number(searchParams.get("maxPrice")) || 5000;
   const initialMinRating = Number(searchParams.get("minRating")) || 0;
 
@@ -23,12 +24,13 @@ function ToursContent() {
   // Filters state
   const [search, setSearch] = useState(initialSearch);
   const [location, setLocation] = useState(initialLocation);
+  const [date, setDate] = useState(initialDate);
   const [maxPrice, setMaxPrice] = useState(initialMaxPrice);
   const [minRating, setMinRating] = useState(initialMinRating);
 
   const fetchTours = async () => {
     setIsLoading(true);
-    const data = await api.getTours({ search, location, maxPrice, minRating });
+    const data = await api.getTours({ search, location, date, maxPrice, minRating });
     setTours(data);
     setIsLoading(false);
   };
@@ -40,12 +42,13 @@ function ToursContent() {
     const params = new URLSearchParams();
     if (search) params.set("search", search);
     if (location) params.set("location", location);
+    if (date) params.set("date", date);
     if (maxPrice < 5000) params.set("maxPrice", maxPrice.toString());
     if (minRating > 0) params.set("minRating", minRating.toString());
     
     const newUrl = params.toString() ? `?${params.toString()}` : "/tours";
     router.replace(newUrl, { scroll: false });
-  }, [search, location, maxPrice, minRating]);
+  }, [search, location, date, maxPrice, minRating]);
 
   return (
     <div className="bg-gray-50 dark:bg-gray-950 min-h-screen py-8">
@@ -87,13 +90,25 @@ function ToursContent() {
                 <select 
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white"
+                  className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white mb-4"
                 >
                   <option value="">All Destinations</option>
                   <option value="Bali">Bali</option>
                   <option value="Switzerland">Switzerland</option>
                   <option value="Japan">Japan</option>
                 </select>
+              </div>
+
+              {/* Date */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Date</label>
+                <input 
+                  type="date" 
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  min={new Date().toISOString().split("T")[0]}
+                  className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white"
+                />
               </div>
               
               {/* Price Range */}
@@ -146,6 +161,7 @@ function ToursContent() {
                 onClick={() => {
                   setSearch("");
                   setLocation("");
+                  setDate("");
                   setMaxPrice(5000);
                   setMinRating(0);
                 }}

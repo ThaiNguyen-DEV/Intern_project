@@ -12,6 +12,7 @@ export interface Tour {
   isDeal?: boolean;
   discountPrice?: number;
   destinationSlug?: string;
+  availableDates: string[];
 }
 
 export interface Booking {
